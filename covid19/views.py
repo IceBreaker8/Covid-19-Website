@@ -7,6 +7,8 @@ from django.http import HttpResponse
 def home(request):
     return render(request, "covidHtml/home.html")
 
+def overview(request):
+    return render(request,"covidHtml/overview.html")
 
 def map(request):
     return render(request, "covidHtml/map.html")
