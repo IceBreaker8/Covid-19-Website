@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
+
+#import overviewPage
+from pageManager.overviewPage import overviewContext
 
 
 # Create your views here.
@@ -7,8 +10,10 @@ from django.http import HttpResponse
 def home(request):
     return render(request, "covidHtml/home.html")
 
+
 def overview(request):
-    return render(request,"covidHtml/overview.html")
+    return render(request, "covidHtml/overview.html", overviewContext())
+
 
 def map(request):
     return render(request, "covidHtml/map.html")
