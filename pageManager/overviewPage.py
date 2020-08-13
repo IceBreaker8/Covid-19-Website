@@ -22,5 +22,22 @@ def overviewContext():
     totalCases = confirmedGlobal[confirmedGlobal.columns[-1]].sum()
     totalRecov = recoverGlobal[recoverGlobal.columns[-1]].sum()
     totalDeath = deathGLobal[deathGLobal.columns[-1]].sum()
+
+    # convertion with the commas
+    totalCases = numFormatter(str(totalCases))
+    totalRecov = numFormatter(str(totalRecov))
+    totalDeath = numFormatter(str(totalDeath))
+
     context = {"totalCases": totalCases, "totalRecov": totalRecov, "totalDeath": totalDeath}
     return context
+
+
+def numFormatter(num):
+    n = list(num)
+    n.reverse()
+    s = ""
+    for i in range(0, len(n)):
+        if (i % 3 == 0 and i != 0):
+            s = "," + s
+        s = str(n[i]) + s
+    return s
