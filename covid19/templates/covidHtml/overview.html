@@ -1,6 +1,10 @@
 {% extends "covidHtml/base.html" %}
 {% block content %}
     <style>
+        #firstDiv {
+            margin-top: 6%;
+        }
+
         .total {
             border: 3px solid lightslategrey;
             border-radius: 2px;
@@ -22,8 +26,8 @@
         .generalChart {
             width: 70%;
             margin-left: 15%;
-            margin-top: 4%;
-            margin-bottom: 6%;
+            margin-top: 2%;
+            margin-bottom: 4%;
         }
     </style>
 
@@ -31,7 +35,7 @@
 
 
 
-    <div class="total">
+    <div class="total" id="firstDiv">
         <p>
         <h1>Coronavirus Cases</h1>
         <p class="num">{{ totalCases }}</p>
