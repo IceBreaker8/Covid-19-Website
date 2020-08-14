@@ -27,10 +27,31 @@ def overviewContext():
     totalCases = numFormatter(str(totalCases))
     totalRecov = numFormatter(str(totalRecov))
     totalDeath = numFormatter(str(totalDeath))
-    #
-    context = {"totalCases": totalCases, "totalRecov": totalRecov, "totalDeath": totalDeath}
+
+    # totalCaseGraph
+    xAxis = getGraphDates(confirmedGlobal)
+    # totalConfirmed
+    yAxisConfirmed = confirmedPerDay(confirmedGlobal)
+    # totalDeaths
+    yAxisDeaths = confirmedPerDay(deathGLobal)
+    # totalRecov
+    yAxisRecov = confirmedPerDay(recoverGlobal)
+
+    context = {"totalCases": totalCases, "totalRecov": totalRecov, "totalDeath": totalDeath,
+               "xAxis": xAxis,
+               "yAxisConfirmed": yAxisConfirmed,
+               "yAxisDeaths": yAxisDeaths,
+               "yAxisRecov": yAxisRecov}
+
     return context
 
+
+######################################################################
+# width of the xAxis
+xAxisWidth = 90
+
+
+######################################################################
 
 def numFormatter(num):
     n = list(num)
@@ -41,3 +62,21 @@ def numFormatter(num):
             s = "," + s
         s = str(n[i]) + s
     return s
+
+
+def confirmedPerDay(toBeParsed):
+    # lastDayData
+    confirmedPerDay = []  # last 15 days
+    for i in range(xAxisWidth):
+        confirmedPerDay.append(toBeParsed[toBeParsed.columns[-i - 1]].sum())
+    confirmedPerDay.reverse()
+    return confirmedPerDay
+
+
+def getGraphDates(toBeParsed):
+    dateList = list(toBeParsed.head(0))
+    extractedDateList = []
+    for i in range(xAxisWidth):
+        extractedDateList.append(dateList[-i - 1])
+    extractedDateList.reverse()
+    return extractedDateList

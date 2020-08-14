@@ -18,7 +18,17 @@
             color: indianred;
 
         }
+
+        .generalChart {
+            width: 70%;
+            margin-left: 15%;
+            margin-top: 4%;
+            margin-bottom: 6%;
+        }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
 
 
     <div class="total">
@@ -27,12 +37,14 @@
         <p class="num">{{ totalCases }}</p>
 
     </div>
+
     <div class="total">
         <p>
         <h1>Total Deaths</h1>
         <p class="num">{{ totalDeath }}</p>
 
     </div>
+
     <div class="total">
         <p>
         <h1>Total Recovered</h1>
@@ -40,8 +52,40 @@
 
     </div>
 
+    <div class="generalChart">
+        <canvas id="chart"></canvas>
+    </div>
 
 
-
-
+    <script>
+        new Chart(document.getElementById("chart"), {
+            type: 'line',
+            data: {
+                labels: {{ xAxis|safe }},
+                datasets: [{
+                    data: {{ yAxisConfirmed|safe }},
+                    label: "Total Cases",
+                    borderColor: "#0075bd",
+                    fill: false
+                }, {
+                    data: {{ yAxisDeaths|safe }},
+                    label: "Total Deaths",
+                    borderColor: "#ef0c0c",
+                    fill: false
+                }, {
+                    data: {{ yAxisRecov|safe }},
+                    label: "Total Recovered",
+                    borderColor: "#0fba34",
+                    fill: false
+                }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Coronavirus Worldwide Dashboard for the last 90 days'
+                }
+            }
+        });
+    </script>
 {% endblock content %}
