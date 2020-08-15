@@ -1,9 +1,155 @@
 {% extends "covidHtml/base.html" %}
 {% block content %}
 
+    <style>
+        .nav {
+            border: 3px solid lightslategrey;
+            padding: 16px;
+            margin-left: 20%;
+            margin-right: 20%;
+            font-size: 30px;
+            text-align: center;
+            margin-top: 2%;
+            border-radius: 12px;
 
-    <h1>statistics page!</h1>
 
+        }
+
+        .countrySearch {
+            width: 400px;
+            height: 40px;
+            border: 1px black solid;
+            border-radius: 4px;
+            transition: width 0.2s ease-in;
+        }
+
+        .countrySearch:focus {
+            width: 600px;
+        }
+
+
+        .labelSearch {
+            font-size: 20px;
+            color: indianred;
+
+        }
+
+        .searchButton {
+            color: black;
+            margin-left: 10px;
+
+        }
+
+        .searchButton:hover {
+            color: indianred;
+        }
+
+        #abs {
+            position: absolute;
+        }
+
+
+        /* ==========================   Dropdown search menu ============================ */
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 600px;
+            overflow: auto;
+            border: 1px solid black;
+            z-index: 1;
+            margin-left: 210px;
+            margin-top: 2px;
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 2px 4px;
+            margin-left: 2px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.1s ease-in;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #D3D3D3;
+        }
+
+        .show {
+            display: block;
+        }
+
+
+        /* ================================================ */
+    </style>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <div class="nav">
+
+        <label class="labelSearch">
+            Choose a valid country:
+            <input type="text" class="countrySearch" placeholder="Country.."
+                   onclick="return myFunction()" oninput="return myFunction()" onblur="return f()"/>
+            <div id="myDropdown" class="dropdown-content">
+                <!-- TODO remove all these and replace with real search -->
+                <a href="#about">About</a>
+                <a href="#base">Base</a>
+                <a href="#blog">Blog</a>
+                <a href="#contact">Contact</a>
+                <a href="#custom">Custom</a>
+                <a href="#support">Support</a>
+                <a href="#tools">Tools</a>
+            </div>
+
+        </label>
+
+
+        <a class="searchButton" href="#">
+            <i class="fas fa-search"></i>
+        </a>
+
+
+    </div>
+
+
+    <script>
+
+        shown = false;
+
+        function myFunction() {
+            //TODO update searching here
+            if (!shown) {
+                document.getElementById("myDropdown").classList.toggle("show");
+                shown = true;
+            }
+        }
+
+        function f() {
+
+            if (shown) {
+                document.getElementById("myDropdown").classList.toggle("show");
+                shown = false;
+            }
+        }
+
+        function hello() {
+
+            let res = document.getElementById("results")
+            res.innerHTML += "hello<br>"
+
+            return false;
+        }
+
+
+    </script>
 
 
 {% endblock content %}

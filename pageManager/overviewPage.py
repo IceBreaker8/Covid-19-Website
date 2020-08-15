@@ -2,6 +2,10 @@
 import pandas as pd
 import numpy as np
 
+totalConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+deathConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
+recovConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
+
 
 def overviewContext():
     # define the three variables
@@ -10,15 +14,10 @@ def overviewContext():
     confirmedRecov = None
 
     confirmedGlobal = pd.read_csv(
-        'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv',
-        encoding='utf-8', na_values=None)
+        totalConfirmedUrl, encoding='utf-8', na_values=None)
 
-    deathGLobal = pd.read_csv(
-        'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv')
-
-    recoverGlobal = pd.read_csv(
-        'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv')
-
+    deathGLobal = pd.read_csv(deathConfirmedUrl)
+    recoverGlobal = pd.read_csv(recovConfirmedUrl)
     totalCases = confirmedGlobal[confirmedGlobal.columns[-1]].sum()
     totalRecov = recoverGlobal[recoverGlobal.columns[-1]].sum()
     totalDeath = deathGLobal[deathGLobal.columns[-1]].sum()

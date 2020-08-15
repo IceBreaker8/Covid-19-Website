@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
-
-#import overviewPage
+# import overviewPage
 from pageManager.overviewPage import overviewContext
+from pageManager.statisticsPage import *
 
 
 # Create your views here.
@@ -20,7 +20,7 @@ def map(request):
 
 
 def stats(request):
-    return render(request, "covidHtml/statistics.html")
+    return render(request, "covidHtml/statistics.html", countryList())
 
 
 def subs(request):
