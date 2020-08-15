@@ -10,6 +10,6 @@ def countryList():
     countryList = []
     confirmedGlobal = pd.read_csv(
         totalConfirmedUrl, encoding='utf-8', na_values=None)
-    countryList = list(confirmedGlobal[confirmedGlobal.columns[1]])
+    countryList = sorted(list(set(confirmedGlobal[confirmedGlobal.columns[1]])))
     context = {"countryList": countryList}
     return context

@@ -54,6 +54,7 @@
         .dropdown {
             position: relative;
             display: inline-block;
+
         }
 
         .dropdown-content {
@@ -61,6 +62,7 @@
             position: absolute;
             background-color: white;
             min-width: 600px;
+            max-height: 78%;
             overflow: auto;
             border: 1px solid black;
             z-index: 1;
@@ -68,6 +70,7 @@
             margin-top: 2px;
             border-radius: 4px;
             text-align: left;
+            min-height: 0%;
         }
 
         .dropdown-content a {
@@ -96,17 +99,11 @@
 
         <label class="labelSearch">
             Choose a valid country:
-            <input type="text" class="countrySearch" placeholder="Country.."
-                   onclick="return myFunction()" oninput="return myFunction()" onblur="return f()"/>
+            <input id="searchbox" type="text" class="countrySearch" placeholder="Country.."
+                   oninput="return onInputWord()" onblur="return f()"/>
             <div id="myDropdown" class="dropdown-content">
-                <!-- TODO remove all these and replace with real search -->
-                <a href="#about">About</a>
-                <a href="#base">Base</a>
-                <a href="#blog">Blog</a>
-                <a href="#contact">Contact</a>
-                <a href="#custom">Custom</a>
-                <a href="#support">Support</a>
-                <a href="#tools">Tools</a>
+                <!-- injected from javascript -->
+
             </div>
 
         </label>
@@ -122,10 +119,47 @@
 
     <script>
 
+        var countryList = {{countryList|safe}};
+
         shown = false;
 
-        function myFunction() {
-            //TODO update searching here
+        function onInputWord() {
+            //TODO update search
+
+
+            c = document.getElementById("myDropdown");
+            //clearing html
+            c.innerHTML = "";
+            searchBox = document.getElementById("searchbox")
+
+            //modifying c innerHTML
+            for (var i = 0; i < countryList.length; i++) {
+                if (countryList[i].toLowerCase().startsWith(searchBox.value.toLowerCase())) {
+                    c.innerHTML += "<a href='#'>" + countryList[i] + "</a>";
+                }
+            }
+            if (!shown) {
+                document.getElementById("myDropdown").classList.toggle("show");
+                shown = true;
+            }
+        }
+
+        function onInputWordNoEmpty() {
+            //TODO update search
+
+
+            c = document.getElementById("myDropdown");
+            //clearing html
+            c.innerHTML = "";
+            searchBox = document.getElementById("searchbox")
+
+            //modifying c innerHTML
+            for (var i = 0; i < countryList.length; i++) {
+                if (countryList[i].toLowerCase().startsWith(searchBox.value.toLowerCase())
+                    && searchBox.value != "") {
+                    c.innerHTML += "<a href='#'>" + countryList[i] + "</a>";
+                }
+            }
             if (!shown) {
                 document.getElementById("myDropdown").classList.toggle("show");
                 shown = true;
@@ -133,7 +167,6 @@
         }
 
         function f() {
-
             if (shown) {
                 document.getElementById("myDropdown").classList.toggle("show");
                 shown = false;
