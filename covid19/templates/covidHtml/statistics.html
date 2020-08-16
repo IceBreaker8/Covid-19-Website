@@ -20,7 +20,7 @@
             height: 40px;
             border: 1px black solid;
             border-radius: 4px;
-            transition: width 0.2s ease-in;
+            transition: width 0.25s ease-in;
         }
 
         .countrySearch:focus {
@@ -57,6 +57,7 @@
 
         }
 
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -90,9 +91,21 @@
             display: block;
         }
 
+        .generalChart {
+            width: 60%;
+            margin-left: 19.4%;
+            margin-top: 2%;
+            margin-bottom: 4%;
+        }
 
         /* ================================================ */
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+
+
+
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <div class="nav">
@@ -100,7 +113,11 @@
         <label class="labelSearch">
             Choose a valid country:
             <input id="searchbox" type="text" class="countrySearch" placeholder="Country.."
-                   oninput="return onInputWord()" onblur="return f()"/>
+
+                   onfocus="return onSearchBoxClick()"
+                   oninput="return onInputWord()"
+                   onblur="return exitInputBox()"
+            />
             <div id="myDropdown" class="dropdown-content">
                 <!-- injected from javascript -->
 
@@ -116,69 +133,196 @@
 
     </div>
 
+    <!-- Chart for each country selected here: -->
+    <div class="generalChart">
+        <canvas id="myChart"></canvas>
+    </div>
+
+
+
 
     <script>
 
-        var countryList = {{countryList|safe}};
+        var searchBox = document.getElementById("searchbox")
+        var c = document.getElementById("myDropdown");
+        //search on click choice ====================================================
 
+
+        //============================================================================
+        var countryList = {{countryList|safe}};
         shown = false;
 
         function onInputWord() {
-            //TODO update search
+            c.style.display = "block";
 
-
-            c = document.getElementById("myDropdown");
             //clearing html
             c.innerHTML = "";
-            searchBox = document.getElementById("searchbox")
 
             //modifying c innerHTML
-            for (var i = 0; i < countryList.length; i++) {
-                if (countryList[i].toLowerCase().startsWith(searchBox.value.toLowerCase())) {
-                    c.innerHTML += "<a href='#'>" + countryList[i] + "</a>";
+            for (i = 0; i < countryList.length; i++) {
+                var s = countryList[i];
+                if (s.toLowerCase().startsWith(searchBox.value.toLowerCase())) {
+                    c.innerHTML += `<a href='#' name="${s}"
+                        onclick="choiceFunc(name)">${s}</a>`;
                 }
+
             }
+
             if (!shown) {
                 document.getElementById("myDropdown").classList.toggle("show");
                 shown = true;
             }
         }
 
-        function onInputWordNoEmpty() {
-            //TODO update search
 
+        function onSearchBoxClick() {
+            if (searchBox.value.toString().length != 0) {
+                c.style.display = "block";
+            } else {
+                c.style.display = "none";
+            }
 
-            c = document.getElementById("myDropdown");
             //clearing html
             c.innerHTML = "";
             searchBox = document.getElementById("searchbox")
 
             //modifying c innerHTML
-            for (var i = 0; i < countryList.length; i++) {
-                if (countryList[i].toLowerCase().startsWith(searchBox.value.toLowerCase())
-                    && searchBox.value != "") {
-                    c.innerHTML += "<a href='#'>" + countryList[i] + "</a>";
+            for (i = 0; i < countryList.length; i++) {
+                var s = countryList[i];
+                if (s.toLowerCase().startsWith(searchBox.value.toLowerCase()) &&
+                    searchBox.value != "") {
+                    c.innerHTML += `<a href='#' name="${s}"
+                        onclick="choiceFunc(name)">${s}</a>`;
                 }
+
+
             }
+
             if (!shown) {
                 document.getElementById("myDropdown").classList.toggle("show");
                 shown = true;
             }
         }
 
-        function f() {
-            if (shown) {
-                document.getElementById("myDropdown").classList.toggle("show");
-                shown = false;
-            }
-        }
-
-        function hello() {
-
-            let res = document.getElementById("results")
-            res.innerHTML += "hello<br>"
+        function exitInputBox() {
 
             return false;
+        }
+
+        function choiceFunc(countryName) {
+            searchBox.value = countryName;
+            //modifying css
+            c.innerHTML = "";
+            c.style.display = "none";
+            //TODO database
+            graphShowcase(countryName);
+
+            return false;
+        }
+
+        var allData = {{ dataset|safe }};
+
+
+        function lookForCountry(allData, string) {
+            for (var i = 0; i < allData.length; i++) {
+                if (allData[i][0][1] == string) {
+                    displayChart(allData[i]);
+                    return;
+                }
+            }
+
+        }
+
+
+        function displayChart(countryData) {
+            ///////////// get dates /////////////////////////////////////
+            dateArray = new Array();
+            for (var i = 0; i < countryData.length; i++) {
+                dateArray.push(countryData[i][0]);
+            }
+            dateArray.reverse();
+
+            //////////// get stats //////////////////////
+            statArray = new Array();
+            for (var i = 0; i < countryData.length; i++) {
+                statArray.push(countryData[i][2]);
+            }
+            statArray.reverse();
+
+        }
+
+
+        function removeChart() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            ctx.clearRect(0, 0,
+                document.getElementById('myChart').width,
+                document.getElementById('myChart').height);
+        }
+
+        var myChart;
+
+        function graphShowcase(string) {
+            lookForCountry(allData, string);
+            var ctx = document.getElementById('myChart').getContext('2d');
+            if (myChart != undefined) {
+                myChart.destroy();
+            }
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: dateArray,
+                    datasets: [{
+                        label: 'Coronavirus Dashboard for the last '
+                            + {{ DatesNumber|safe }} +' days',
+                        data: statArray,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            }
+                        }]
+                    }
+                }
+            });
         }
 
 
