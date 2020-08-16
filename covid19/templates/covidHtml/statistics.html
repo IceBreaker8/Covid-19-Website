@@ -11,8 +11,17 @@
             text-align: center;
             margin-top: 2%;
             border-radius: 12px;
+        }
 
-
+        #styled {
+            border: 3px solid lightslategrey;
+            padding: 16px;
+            margin-left: 20%;
+            margin-right: 20%;
+            font-size: 30px;
+            text-align: center;
+            border-radius: 12px;
+            display: none;
         }
 
         .countrySearch {
@@ -91,8 +100,16 @@
         .generalChart {
             width: 60%;
             margin-left: 19.4%;
-            margin-top: 2%;
-            margin-bottom: 4%;
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
+
+        .a {
+            color: indianred;
+        }
+
+        .c {
+            color: grey;
         }
 
         /* ================================================ */
@@ -135,6 +152,10 @@
         <canvas id="myChart"></canvas>
     </div>
 
+    <div id="styled">
+
+
+    </div>
 
 
 
@@ -261,8 +282,8 @@
                 data: {
                     labels: dateArray,
                     datasets: [{
-                        label: 'Coronavirus Dashboard for the last '
-                            + {{ DatesNumber|safe }} +' days',
+                        label: string + "'s Coronavirus Cases reported the last "
+                            + {{ DatesNumber|safe }} +" days",
                         data: statArray,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
@@ -312,6 +333,35 @@
                     }
                 }
             });
+            calculNumber();
+        }
+
+
+        function calculNumber() {
+            nums = new Array();
+            percentages = new Array();
+            var len = statArray.length;
+            for (var i = 1; i < len; i++) {
+                let s = statArray[len - i] - statArray[len - 1 - i];
+                nums.push(s);
+                percentages.push(s / statArray[len - i] * 100);
+            }
+            var avg = 0;
+            var percentage = 0;
+            for (var i = 0; i < nums.length; i++) {
+                avg += nums[i];
+                percentage += percentages[i];
+            }
+            avg = (avg / nums.length).toFixed(2);
+            percentage = (percentage / percentages.length).toFixed(2);
+
+            //injection of HTML
+            document.getElementById("styled").style.display = "block";
+            document.getElementById("styled").innerHTML =
+                `<span class=\"a\">Average Daily Case Increase of</span>\n
+                       <span class=\"b\">${avg}</span>
+                       (<span class=\"c\">${percentage}%</span>)`;
+
         }
 
 

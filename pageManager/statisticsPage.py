@@ -5,6 +5,8 @@ totalConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/m
 deathConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
 recovConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
 
+DatesNumber = 5
+
 
 def countryList():
     countryList = []
@@ -12,10 +14,7 @@ def countryList():
         totalConfirmedUrl, encoding='utf-8', na_values=None)
     countryList = list(set(confirmedGlobal[confirmedGlobal.columns[1]]))
 
-    '''xAxis'''
-
     dataset = confirmedPerDay(confirmedGlobal, len(countryList))
-
     context = {"countryList": countryList,
                "dataset": dataset,
                "DatesNumber": DatesNumber}
@@ -30,9 +29,6 @@ def getGraphDates(toBeParsed):
         extractedDateList.append(dateList[-i - 1])
     extractedDateList.reverse()
     return extractedDateList
-
-
-DatesNumber = 7
 
 
 def confirmedPerDay(confirmedParam, countryNum):
