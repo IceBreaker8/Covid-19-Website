@@ -10,11 +10,11 @@ def countryList():
     countryList = []
     confirmedGlobal = pd.read_csv(
         totalConfirmedUrl, encoding='utf-8', na_values=None)
-    countryList = sorted(list(set(confirmedGlobal[confirmedGlobal.columns[1]])))
+    countryList = list(set(confirmedGlobal[confirmedGlobal.columns[1]]))
 
     '''xAxis'''
 
-    dataset = confirmedPerDay(confirmedGlobal)
+    dataset = confirmedPerDay(confirmedGlobal, len(countryList))
 
     context = {"countryList": countryList,
                "dataset": dataset,
@@ -32,26 +32,19 @@ def getGraphDates(toBeParsed):
     return extractedDateList
 
 
-DatesNumber = 15
+DatesNumber = 7
 
 
-def confirmedPerDay(toBeParsed):
-    confirmedGlobal = pd.read_csv(
-        totalConfirmedUrl, encoding='utf-8', na_values=None)
-    countryList = sorted(list(set(confirmedGlobal[confirmedGlobal.columns[1]])))
-
+def confirmedPerDay(confirmedParam, countryNum):
     # lastDayData =>    country : data
     finalData = []
-    df3 = toBeParsed[list(toBeParsed.columns[1:2]) +
-                     list(list(toBeParsed.columns.values)[-DatesNumber:])]
-    # TODO dataList merge with dict
-    dateList = list(list(confirmedGlobal.columns.values)[-DatesNumber:])
+    dateList = list(list(confirmedParam.columns.values)[-DatesNumber:])
     #############################################################
-    for c in range(len(countryList)):
+    for c in range(countryNum):
         allDate = []
         for i in range(len(dateList)):
-            barplot = confirmedGlobal[['Country/Region',
-                                       confirmedGlobal.columns[-i - 1]]]. \
+            barplot = confirmedParam[['Country/Region',
+                                      confirmedParam.columns[-i - 1]]]. \
                 groupby('Country/Region').sum()
 
             barplot = barplot.reset_index()
