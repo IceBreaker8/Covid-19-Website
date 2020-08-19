@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
 
-<html>
 <head>
     <script src="{%  static 'js/script.js' %}"></script>
     <link rel="stylesheet"  href="{%  static  'css/style.css'  %}">
@@ -269,7 +268,7 @@ list_items[i].style.display="flex"
 </script>
 <script>
      document.getElementsByClassName("site-header")[0].style.zIndex=999;
-document.getElementsByClassName("map-sidebar-numbers")[0].style.top="40px";
+document.getElementsByClassName("map-sidebar-numbers")[0].style.top="35px";
 document.getElementsByClassName("map-sidebar-numbers")[0].style.zIndex=900;
 document.getElementsByClassName("map-sidebar-numbers")[0].style.zIndex=900;
 document.getElementsByClassName("leaflet-top")[0].style.top="520px";
@@ -277,5 +276,4 @@ document.getElementsByClassName("leaflet-top")[0].style.top="520px";
 </script>
 </body>
 
-</html>
 {% endblock content %}
