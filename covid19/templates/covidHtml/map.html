@@ -2,118 +2,128 @@
 {% load static %}
 {% block content %}
 
-<head>
-    <script src="{%  static 'js/script.js' %}"></script>
-    <link rel="stylesheet"  href="{%  static  'css/style.css'  %}">
-    <link rel=“stylesheet” href=“https://cdn.jsdelivr.net/npm/fontisto@v3.0.4/css/fontisto/fontisto.min.css”>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://coronavirus-92ebd.web.app/assets/css/feather/feather.css" rel="stylesheet">
-    <title>Corona DashBoard</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
-    <link rel="shortcut icon" type="image/x-icon" href="https://image.flaticon.com/icons/svg/2785/2785819.svg" />
-    <style>
-    #clear-filter {
-    display: none;
-    position: absolute;
-    top: 76px;
-    right: 1.75rem;
-    transform: translateY(-50%);
-    align-items: center;
-    justify-content: center;
-    color: #333;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-    .leaflet-popup-content-wrapper {
-	background: transparent;
-	color: transparent;
-		box-shadow: 0 0px 0px rgba(0, 0, 0, 0.0);
-}
-    </style>
+    <head>
+        <script src="{% static 'js/script.js' %}"></script>
+        <link rel="stylesheet" href="{% static  'css/style.css' %}">
+        <link rel=“stylesheet” href=“https://cdn.jsdelivr.net/npm/fontisto@v3.0.4/css/fontisto/fontisto.min.css”>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+              type="text/css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://coronavirus-92ebd.web.app/assets/css/feather/feather.css" rel="stylesheet">
+        <title>Corona DashBoard</title>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+              integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+              crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+                integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+                crossorigin=""></script>
+        <link rel="shortcut icon" type="image/x-icon" href="https://image.flaticon.com/icons/svg/2785/2785819.svg"/>
+        <style>
+            #clear-filter {
+                display: none;
+                position: absolute;
+                top: 76px;
+                right: 1.75rem;
+                transform: translateY(-50%);
+                align-items: center;
+                justify-content: center;
+                color: #333;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
 
-</head>
-<!-- World Wide infos-->
+            .leaflet-popup-content-wrapper {
+                background: transparent;
+                color: transparent;
+                box-shadow: 0 0px 0px rgba(0, 0, 0, 0.0);
+            }
+        </style>
 
-<div class="map-sidebar-numbers">
-    <div class="map-sidebar-section">
-        <div class="map-sidebar-card active" id="World Wide TC" data-title="infected">22,083,206</div>
+    </head>
+    <!-- World Wide infos-->
+
+    <div class="map-sidebar-numbers">
+        <div class="map-sidebar-section">
+            <div class="map-sidebar-card active" id="World Wide TC" data-title="infected">22,083,206</div>
+        </div>
+        <div class="map-sidebar-section">
+            <div class="map-sidebar-card" id="Recoveries" data-title="dead" data-text="Deaths">785,604</div>
+            <div class="map-sidebar-card" id="Deaths" data-title="recovered" data-text="Recoveries">14,713,135</div>
+        </div>
     </div>
-    <div class="map-sidebar-section">
-        <div class="map-sidebar-card" id="Recoveries" data-title="dead" data-text="Deaths">785,604</div>
-        <div class="map-sidebar-card" id="Deaths" data-title="recovered" data-text="Recoveries">14,713,135</div>
-    </div>
-</div>
 
-<div class="map-sidebar">
-    <div class="app-sub-buttons">
-        <div class="map-world-nbs">World</div>
-        <div class="dropup ">
-            <div class="map-sidebar-sort">Total cases</div>
-            <div class="dropup-content type-filter">
-                <div class="type-filter-title">Sort By</div>
-                <div class="type-filter-el" id="TC">
-                    <div class="type-filter-icon fa fa-user-plus"></div>
-                    <div class="type-filter-name">Total cases</div>
-                </div>
-                <div class="type-filter-el" id="CPM">
-                    <div class="type-filter-icon fa fa-users"></div>
-                    <div class="type-filter-name">Cases per million</div>
-                </div>
-                <div class="type-filter-el" id="Rec">
-                    <div class="type-filter-icon fa fa-home"></div>
-                    <div class="type-filter-name">Recoveries</div>
-                </div>
-                <div class="type-filter-el" id="Ds">
-                    <div class="type-filter-icon fa fa-remove"></div>
-                    <div class="type-filter-name">Deaths</div>
-                </div>
-                <div class="type-filter-el" id="FR">
-                    <div class="type-filter-icon fa fa-percent"></div>
-                    <div class="type-filter-name">Fatality rate</div>
-                </div>
-                <div class="type-filter-el" id="DPM">
-                    <div class="type-filter-icon fa fa-user-times"></div>
-                    <div class="type-filter-name">Deaths per million</div>
-                </div>
-                <div class="type-filter-el" id="Act">
-                    <div class="type-filter-icon fa fa-spinner"></div>
-                    <div class="type-filter-name">Active cases</div>
-                </div>
-                <div class="type-filter-el" id="name">
-                    <div class="type-filter-icon feather feather-align-left"></div>
-                    <div class="type-filter-name">Name</div>
-                </div>
+    <div class="map-sidebar">
+        <div class="app-sub-buttons">
+            <div class="map-world-nbs">World</div>
+            <div class="dropup ">
+                <div class="map-sidebar-sort">Total cases</div>
+                <div class="dropup-content type-filter">
+                    <div class="type-filter-title">Sort By</div>
+                    <div class="type-filter-el" id="TC">
+                        <div class="type-filter-icon fa fa-user-plus"></div>
+                        <div class="type-filter-name">Total cases</div>
+                    </div>
+                    <div class="type-filter-el" id="CPM">
+                        <div class="type-filter-icon fa fa-users"></div>
+                        <div class="type-filter-name">Cases per million</div>
+                    </div>
+                    <div class="type-filter-el" id="Rec">
+                        <div class="type-filter-icon fa fa-home"></div>
+                        <div class="type-filter-name">Recoveries</div>
+                    </div>
+                    <div class="type-filter-el" id="Ds">
+                        <div class="type-filter-icon fa fa-remove"></div>
+                        <div class="type-filter-name">Deaths</div>
+                    </div>
+                    <div class="type-filter-el" id="FR">
+                        <div class="type-filter-icon fa fa-percent"></div>
+                        <div class="type-filter-name">Fatality rate</div>
+                    </div>
+                    <div class="type-filter-el" id="DPM">
+                        <div class="type-filter-icon fa fa-user-times"></div>
+                        <div class="type-filter-name">Deaths per million</div>
+                    </div>
+                    <div class="type-filter-el" id="Act">
+                        <div class="type-filter-icon fa fa-spinner"></div>
+                        <div class="type-filter-name">Active cases</div>
+                    </div>
+                    <div class="type-filter-el" id="name">
+                        <div class="type-filter-icon feather feather-align-left"></div>
+                        <div class="type-filter-name">Name</div>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
-    <div class="app-top-bar">
-        <div class="app-top-bar-inner">
-            <div class="app-top-bar-inner-back animate"></div>
-            <input class="app-top-bar-search" onkeyup="filterList()" id="myInput" type="text" placeholder="Search 219 Countries...">
-            <div id="clear-filter-btn" onclick="clearFilter()" style="display: flex;"><img src="https://img.icons8.com/fluent/48/000000/close-window.png" width="20" height="20" alt="Clear"/></div>
-            <div class="map-sidebar-right-btns">
-                <div class="map-sidebar-clear hide"></div>
+        <div class="app-top-bar">
+            <div class="app-top-bar-inner">
+                <div class="app-top-bar-inner-back animate"></div>
+                <input class="app-top-bar-search" onkeyup="filterList()" id="myInput" type="text"
+                       placeholder="Search 219 Countries...">
+                <div id="clear-filter-btn" onclick="clearFilter()" style="display: flex;"><img
+                        src="https://img.icons8.com/fluent/48/000000/close-window.png" width="20" height="20"
+                        alt="Clear"/></div>
+                <div class="map-sidebar-right-btns">
+                    <div class="map-sidebar-clear hide"></div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="map-sidebar-section column">
-        <div class="map-sidebar-section-content">
+        <div class="map-sidebar-section column">
+            <div class="map-sidebar-section-content">
+            </div>
         </div>
+
     </div>
 
-</div>
+    <!-- Counpries Tri-->
 
-<!-- Counpries Tri-->
-
-<body onload="mff()">
+    <body onload="mff()">
 
     <!-- Make sure you put this AFTER Leaflet's CSS -->
 
-    <div id="mapid"> </div>
+    <div id="mapid"></div>
     <script>
         var mymap = L.map('mapid').setView([33.8869, 9.5375], 5);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -138,7 +148,7 @@
         }
 
         var cont = document.getElementsByClassName("map-sidebar-section-content")[0];
-        document.getElementById("TC").addEventListener("click", function() {
+        document.getElementById("TC").addEventListener("click", function () {
             document.getElementsByClassName("map-sidebar-sort")[0].innerHTML = "Total Cases";
             url = "https://disease.sh/v3/covid-19/countries?yesterday=false&twoDaysAgo=false&sort=cases&allowNull=false";
             var jsonf = JSON.parse(Get(url));
@@ -147,7 +157,7 @@
         });
         <!-- Cases Per million  Sort -->
 
-        document.getElementById("CPM").addEventListener("click", function() {
+        document.getElementById("CPM").addEventListener("click", function () {
             document.getElementsByClassName("map-sidebar-sort")[0].innerHTML = "Cases Per Million";
             url = "https://disease.sh/v3/covid-19/countries?yesterday=false&twoDaysAgo=false&sort=casesPerOneMillion&allowNull=false";
             var jsonf = JSON.parse(Get(url));
@@ -156,7 +166,7 @@
         });
         <!-- Recoveries Sort -->
 
-        document.getElementById("Rec").addEventListener("click", function() {
+        document.getElementById("Rec").addEventListener("click", function () {
             document.getElementsByClassName("map-sidebar-sort")[0].innerHTML = "Recoveries";
             url = "https://disease.sh/v3/covid-19/countries?yesterday=false&twoDaysAgo=false&sort=recovered&allowNull=false";
             var jsonf = JSON.parse(Get(url));
@@ -166,7 +176,7 @@
 
         });
         <!-- Deaths Sort -->
-        document.getElementById("Ds").addEventListener("click", function() {
+        document.getElementById("Ds").addEventListener("click", function () {
             document.getElementsByClassName("map-sidebar-sort")[0].innerHTML = "Deaths";
             url = 'https://disease.sh/v3/covid-19/countries?yesterday=false&twoDaysAgo=false&sort=deaths&allowNull=false';
             var jsonf = JSON.parse(Get(url));
@@ -177,14 +187,14 @@
         });
         <!-- Fatality Rate Sort -->
 
-        document.getElementById("FR").addEventListener("click", function() {
+        document.getElementById("FR").addEventListener("click", function () {
             document.getElementsByClassName("map-sidebar-sort")[0].innerHTML = "Fatality Rate";
             url = "";
 
         });
         <!-- Deaths Per Million Sort -->
 
-        document.getElementById("DPM").addEventListener("click", function() {
+        document.getElementById("DPM").addEventListener("click", function () {
             document.getElementsByClassName("map-sidebar-sort")[0].innerHTML = "Deaths Per Million";
             url = 'https://disease.sh/v3/covid-19/countries?yesterday=false&twoDaysAgo=false&sort=deathsPerOneMillion&allowNull=false';
             var jsonf = JSON.parse(Get(url));
@@ -192,7 +202,7 @@
             DrawCircle("purple", "DPM");
 
         });
-        document.getElementById("Act").addEventListener("click", function() {
+        document.getElementById("Act").addEventListener("click", function () {
             document.getElementsByClassName("map-sidebar-sort")[0].innerHTML = "Active Cases";
             url = "https://disease.sh/v3/covid-19/countries?yesterday=false&twoDaysAgo=false&sort=active&allowNull=false";
             var jsonf = JSON.parse(Get(url));
@@ -200,7 +210,7 @@
             mf(jsonf, "Act");
             DrawCircle("red", "Act");
         });
-        document.getElementById("name").addEventListener("click", function() {
+        document.getElementById("name").addEventListener("click", function () {
             document.getElementsByClassName("map-sidebar-sort")[0].innerHTML = "Name";
             url = "https://disease.sh/v3/covid-19/countries?yesterday=false&allowNull=false";
             var jsonf = JSON.parse(Get(url));
@@ -229,51 +239,51 @@
         */
     </script>
     <script>
-    var jsonfww = JSON.parse(Get("https://disease.sh/v3/covid-19/all?yesterday=true&twoDaysAgo=true&allowNull=true"));
-    document.getElementById("World Wide TC").innerHTML=numberWithCommas(jsonfww.cases);
-    document.getElementById("Recoveries").innerHTML=numberWithCommas(jsonfww.recovered);
-    document.getElementById("Deaths").innerHTML=numberWithCommas(jsonfww.deaths);
-</script>
-<script >
+        var jsonfww = JSON.parse(Get("https://disease.sh/v3/covid-19/all?yesterday=true&twoDaysAgo=true&allowNull=true"));
+        document.getElementById("World Wide TC").innerHTML = numberWithCommas(jsonfww.cases);
+        document.getElementById("Recoveries").innerHTML = numberWithCommas(jsonfww.recovered);
+        document.getElementById("Deaths").innerHTML = numberWithCommas(jsonfww.deaths);
+    </script>
+    <script>
 
-function filterList() {
-  let filter = document.getElementById('myInput').value.toUpperCase();
-  ul = document.getElementsByClassName ('map-sidebar-section-content')[0];
-  let list_items = document.getElementsByClassName ('map-sidebar-section-content')[0].getElementsByClassName ('map-sidebar-section-item');
-  let clearFilterbtn = document.getElementById('clear-filter-btn');
-  // Loop through all list items, and hide those who don't match the search query
-  for (let i = 0; i < list_items.length; ++i) {
-    let label = list_items[i].getElementsByClassName("map-sidebar-section-item-title")[0];
-    let txtValue = label.textContent || label.innerText;
-    // Show/hide the clear filter button.
-    clearFilterbtn.style.display = !!filter ? 'flex' : 'none';
+        function filterList() {
+            let filter = document.getElementById('myInput').value.toUpperCase();
+            ul = document.getElementsByClassName('map-sidebar-section-content')[0];
+            let list_items = document.getElementsByClassName('map-sidebar-section-content')[0].getElementsByClassName('map-sidebar-section-item');
+            let clearFilterbtn = document.getElementById('clear-filter-btn');
+            // Loop through all list items, and hide those who don't match the search query
+            for (let i = 0; i < list_items.length; ++i) {
+                let label = list_items[i].getElementsByClassName("map-sidebar-section-item-title")[0];
+                let txtValue = label.textContent || label.innerText;
+                // Show/hide the clear filter button.
+                clearFilterbtn.style.display = !!filter ? 'flex' : 'none';
 
-    // Show/hide matching list items.
-    const show = txtValue.toUpperCase().indexOf(filter) != -1;
-    list_items[i].style.display = show ? '' : 'none';
-  }
-}
+                // Show/hide matching list items.
+                const show = txtValue.toUpperCase().indexOf(filter) != -1;
+                list_items[i].style.display = show ? '' : 'none';
+            }
+        }
 
-function clearFilter() {
-  document.getElementById('myInput').value = ' ';
-    let list_items = document.getElementsByClassName ('map-sidebar-section-content')[0].getElementsByClassName ('map-sidebar-section-item');
+        function clearFilter() {
+            document.getElementById('myInput').value = ' ';
+            let list_items = document.getElementsByClassName('map-sidebar-section-content')[0].getElementsByClassName('map-sidebar-section-item');
 
 
-  filterList();
-  for(let i=0;i<list_items.length;i++){
-list_items[i].style.display="flex"
-}
-}
+            filterList();
+            for (let i = 0; i < list_items.length; i++) {
+                list_items[i].style.display = "flex"
+            }
+        }
 
-</script>
-<script>
-     document.getElementsByClassName("site-header")[0].style.zIndex=999;
-document.getElementsByClassName("map-sidebar-numbers")[0].style.top="35px";
-document.getElementsByClassName("map-sidebar-numbers")[0].style.zIndex=900;
-document.getElementsByClassName("map-sidebar-numbers")[0].style.zIndex=900;
-document.getElementsByClassName("leaflet-top")[0].style.top="520px";
+    </script>
+    <script>
+        document.getElementsByClassName("site-header")[0].style.zIndex = 999;
+        document.getElementsByClassName("map-sidebar-numbers")[0].style.top = "35px";
+        document.getElementsByClassName("map-sidebar-numbers")[0].style.zIndex = 900;
+        document.getElementsByClassName("map-sidebar-numbers")[0].style.zIndex = 900;
+        document.getElementsByClassName("leaflet-top")[0].style.top = "520px";
 
-</script>
-</body>
+    </script>
+    </body>
 
 {% endblock content %}

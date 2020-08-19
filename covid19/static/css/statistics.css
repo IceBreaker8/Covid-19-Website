@@ -1,0 +1,110 @@
+
+.nav {
+    border: 3px solid lightslategrey;
+    padding: 16px;
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 2%;
+    border-radius: 12px;
+}
+
+#styled {
+    border: 3px solid lightslategrey;
+    padding: 16px;
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: 30px;
+    text-align: center;
+    border-radius: 12px;
+    display: none;
+}
+
+.countrySearch {
+    width: 400px;
+    height: 40px;
+    border: 1px black solid;
+    border-radius: 4px;
+    transition: width 0.25s ease-in;
+}
+
+.countrySearch:focus {
+    width: 600px;
+}
+
+
+.labelSearch {
+    font-size: 20px;
+    color: indianred;
+
+}
+
+.searchButton {
+    color: black;
+    margin-left: 10px;
+    position: relative;
+    margin-top: -4px;
+}
+
+#abs {
+    position: absolute;
+}
+
+
+/* ==========================   Dropdown search menu ============================ */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 600px;
+    max-height: 78%;
+    overflow: auto;
+    border: 1px solid black;
+    z-index: 1;
+    margin-left: 210px;
+    margin-top: 2px;
+    border-radius: 4px;
+    text-align: left;
+    min-height: 0%;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 2px 4px;
+    margin-left: 2px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.1s ease-in;
+}
+
+.dropdown-content a:hover {
+    background-color: #D3D3D3;
+}
+
+.show {
+    display: block;
+}
+
+.generalChart {
+    width: 60%;
+    margin-left: 19.4%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.a {
+    color: indianred;
+}
+
+.c {
+    color: grey;
+}
