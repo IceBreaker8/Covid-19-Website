@@ -6,6 +6,13 @@ totalConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/m
 deathConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
 recovConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
 
+######################################################################
+# width of the xAxis
+xAxisWidth = 90
+
+
+######################################################################
+
 
 def overviewContext():
     # define the three variables
@@ -40,17 +47,11 @@ def overviewContext():
                "xAxis": xAxis,
                "yAxisConfirmed": yAxisConfirmed,
                "yAxisDeaths": yAxisDeaths,
-               "yAxisRecov": yAxisRecov}
+               "yAxisRecov": yAxisRecov,
+               "xAxisWidth": xAxisWidth}
 
     return context
 
-
-######################################################################
-# width of the xAxis
-xAxisWidth = 90
-
-
-######################################################################
 
 def numFormatter(num):
     n = list(num)
