@@ -156,7 +156,7 @@
      for (let i = 0; i < json_obj.length; i++) {
         $("#"+i).on("click",function(){
             let lat = json_obj[this.id]["countryInfo"]["lat"];
-            console.log("lat");
+            console.log(lat);
             let long = json_obj[this.id]["countryInfo"]["long"];
             mymap.setView([lat,long]);
         })}
