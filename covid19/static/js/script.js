@@ -137,21 +137,17 @@
  function mff() {
      cont.innerHTML = "";
      for (let i = 0; i < json_obj.length; i++) {
-         let j=0;
          let flag_url = json_obj[i]["countryInfo"]["flag"];
          let cases = json_obj[i]["cases"]
          let name = json_obj[i].country
          document.getElementsByClassName("map-sidebar-sort")[0].innerHTML = "Total Cases";
-         cont.innerHTML += `<div class="map-sidebar-section-item" id=`+i+`>
+         cont.innerHTML += `<div class="map-sidebar-section-item" id="`+i+`>
          <div class="map-sidebar-section-item-img"><img class="flag-img" src=` + flag_url + `></div>
         <div class="map-sidebar-section-item-details">
           <div class="map-sidebar-section-item-title" id="label">` + name + `</div>
     </div>
      <div class="map-sidebar-section-item-nb infected">` + cases + `</div>
     </div> `;
-    // $(".map-sidebar-section-content").on("click",$(".map-sidebar-section-item"),function(){
-    //     console.log(i);
-    //    })
      }
      for (let i = 0; i < json_obj.length; i++) {
         $("#"+i).on("click",function(){
