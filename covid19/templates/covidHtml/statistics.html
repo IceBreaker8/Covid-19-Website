@@ -11,28 +11,11 @@
 
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <div class="nav">
-
-        <label class="labelSearch">
-            Choose a valid country:
-            <input id="searchbox" type="text" class="countrySearch" placeholder="Country.."
-
-                   onfocus="return onSearchBoxClick()"
-                   oninput="return onInputWord()"
-                   onblur="return exitInputBox()"
-            />
-            <div id="myDropdown" class="dropdown-content">
-                <!-- injected from javascript -->
-
-            </div>
-
-        </label>
 
 
-        <div class="searchButton">
-            <i class="fas fa-search"></i>
-        </div>
-
+    <div class="countryNav">
+        <!-- countryName here -->
+        {{ countryName|safe }}
 
     </div>
 
@@ -47,9 +30,14 @@
     </div>
 
     <script>
-        var countryList = {{ countryList|safe }};
-        var allData = {{ dataset|safe }};
-        var dates = {{ DatesNumber | safe }};
+        var dayNumbers = {{ DatesNumber|safe }};
+        //stats
+        var cases = {{ cases|safe }};
+        var recov = {{ recov |safe }};
+        var deaths = {{ deaths | safe }};
+        //
+        var dates = {{ dates | safe }};
+        var countryName = "{{ countryName|safe }}";
     </script>
     <script src="{% static 'js/statistics.js' %}"></script>
 

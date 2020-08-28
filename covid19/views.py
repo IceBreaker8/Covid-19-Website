@@ -19,8 +19,8 @@ def map(request):
     return render(request, "covidHtml/map.html")
 
 
-def stats(request):
-    return render(request, "covidHtml/statistics.html", countryList())
+def stats(request, country_id):
+    return render(request, "covidHtml/statistics.html", countryList(country_id))
 
 
 def subs(request):
