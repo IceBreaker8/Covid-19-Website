@@ -5,8 +5,7 @@ totalConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/m
 deathConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
 recovConfirmedUrl = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
 
-DatesNumber = 7
-countryName = "US"
+DatesNumber = 9
 
 id_dict = {}
 
@@ -32,7 +31,9 @@ def countryList(country_id):
     confirmedGlobal = pd.read_csv(
         totalConfirmedUrl, encoding='utf-8', na_values=None)
 
-    print(country_id)  # for testing
+    idDictGenerator(confirmedGlobal)
+
+    print(str(country_id) + "   " + str(id_dict[country_id]))  # for testing
 
     recovGlobal = pd.read_csv(
         recovConfirmedUrl)
@@ -46,6 +47,7 @@ def countryList(country_id):
     recov = confirmedPerDay(recovGlobal, id_dict[country_id])
     deaths = confirmedPerDay(deathGlobal, id_dict[country_id])
 
+    countryName = id_dict[country_id]
     context = {
         "countryName": countryName,
         "DatesNumber": DatesNumber,
