@@ -164,6 +164,7 @@
      <div class="map-sidebar-section-item-nb infected">` + cases + `</div>
     </div> `;
      }
+     var bug=0;
      for (let i = 0; i < json_obj.length; i++) {
         $("#"+i).on("click",function(){
             let lat = json_obj[this.id]["countryInfo"]["lat"];
