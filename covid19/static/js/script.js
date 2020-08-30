@@ -132,8 +132,7 @@
          });
 
          circle.on('click',function(evt){
-             window.location.href='statistics/'.concat(_id).concat('/');
-             alert('statistics/'.concat(_id));
+             window.location.href='statistics/'.concat(_id);
          })
 
      }
