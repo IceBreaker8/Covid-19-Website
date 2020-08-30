@@ -43,12 +43,13 @@
          let flag_url = json_obj[i]["countryInfo"]["flag"];
          let cases = json_obj[i][str_]
          let iso = json_obj[i]["countryInfo"]["iso3"];
+         let _id = json_obj[i]["countryInfo"]["_id"];
          let country = json_obj[i]["country"];
          let todayCases = json_obj[i]["todayCases"];
          let Recoveries = json_obj[i]["recovered"];
          let Deaths = json_obj[i]["deaths"]
          if (cases > 1000000) {
-             radius = cases;
+             radius = cases/5;
          } else if (cases < 1000000 && cases > 500000) {
              radius = cases / 1;
          } else if (cases < 500000 && cases > 100000) {
@@ -79,6 +80,7 @@
                          strokewidth: 1,
                          weight: 0,
                      }).addTo(group1);
+                     var col='#f03';
                      break;
                  }
              case "green":
@@ -94,6 +96,7 @@
                          strokewidth: 1,
                          weight: 1,
                      }).addTo(group1);
+                     var col="#00FA9A";
                      break;
 
                  }
@@ -109,17 +112,30 @@
                          strokewidth: 1,
                          weight: 1,
                      }).addTo(group1);
+                     var col='#9370DB';
                      break;
 
                  }
          }
          var popup2 = L.popup({
-             offset: L.point(15, 15)
+             offset: L.point(20, 40)
          }).setContent('<div class="map-tooltip Tooltip main-map"><img src=' + flag_url + '><div class="map-tooltip-title"><div>' + country + '</div></div><div class="map-tooltip-new">+' + todayCases + '</div><div class="map-tooltip-line infected"><span>' + cases + '</span><span>Total cases</span></div><div class="map-tooltip-line recovered"><span>' + Recoveries + '</span><span>Recoveries</span></div><div class="map-tooltip-line dead"><span>' + Deaths + '</span><span>Deaths</span></div></div>');
          circle.bindPopup(popup2);
          circle.on("mouseover", function(evt) {
-             this.openPopup();
+             this.openPopup([lat, long]);
+             this.setStyle({
+                 fillColor: "yellow",});
          });
+      circle.on('mouseout   ',function(evt){
+             this.setStyle({
+                 fillColor: col,});
+         });
+
+         circle.on('click',function(evt){
+             window.location.href='statistics/'.concat(_id).concat('/');
+             alert('statistics/'.concat(_id));
+         })
+
      }
      mymap.addLayer(group1);
 
