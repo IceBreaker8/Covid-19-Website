@@ -37,7 +37,7 @@ def idDictGenerator(confirmedParam):
 
     for i in range(len(ids)):
         id_dict[str(ids[i])] = countryArray[i]
-    print(id_dict)
+
 
 def countryList(country_id):
     confirmedGlobal = pd.read_csv(
