@@ -1,34 +1,40 @@
 
 .countryNav {
-    border: 3px solid lightslategrey;
+    border: 1px solid grey;
     padding: 16px;
     margin-left: 20%;
     margin-right: 20%;
     font-size: 36px;
     margin-top: 2%;
     border-radius: 12px;
-
     text-align: center;
-    color: indianred;
+    color: #DC143C;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-}
-
-.a {
-    color: indianred;
-}
-
-.c {
-    color: grey;
 }
 
 #styled {
-    border: 3px solid lightslategrey;
+    border: 1px solid grey;
     padding: 16px;
     margin-left: 20%;
     margin-right: 20%;
     font-size: 30px;
     text-align: center;
     border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.a {
+    color: #DC143C;
+}
+
+.c {
+    color: grey;
+}
+
+
+#styled:hover {
 }
 
 .generalChart {

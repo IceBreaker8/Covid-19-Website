@@ -42,6 +42,10 @@ function graphShowcase() {
                 ]
             },
             options: {
+                title: {
+                    display: true,
+                    text: countryName + " statistics for the last " + dayNumbers + " days"
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
