@@ -11,7 +11,8 @@ h1, h2, h3, h4, h5, h6 {
 ul {
     margin: 0;
 }
-.toModify{
+
+.toModify {
     font-size: 30px;
     text-align: center;
 
@@ -39,10 +40,14 @@ ul {
     font-size: 30px;
 }
 
-.recall{
+.recall {
     margin-left: 6%;
     color: white;
 
+}
+
+.recall:hover {
+    color: white;
 }
 
 .content-section {
