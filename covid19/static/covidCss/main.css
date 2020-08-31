@@ -11,6 +11,11 @@ h1, h2, h3, h4, h5, h6 {
 ul {
     margin: 0;
 }
+.toModify{
+    font-size: 30px;
+    text-align: center;
+
+}
 
 .bg-steel {
     background-color: #c21b1b;
@@ -30,9 +35,14 @@ ul {
 }
 
 .site-header .navbar-brand {
-    margin-left: -14%;
-    margin-right: 2%;
+    margin-left: 26%;
     font-size: 30px;
+}
+
+.recall{
+    margin-left: 6%;
+    color: white;
+
 }
 
 .content-section {
